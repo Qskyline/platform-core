@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "UserRole", uniqueConstraints = {@UniqueConstraint(columnNames = {"roleId", "userId"})})
+@Table(name = "sys_userRole", uniqueConstraints = {@UniqueConstraint(columnNames = {"roleId", "userId"})})
 public class UserRole {
     private String id;
     private User user;

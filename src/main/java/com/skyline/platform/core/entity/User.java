@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "User")
+@Table(name = "sys_user")
 public class User {
     private String id;
     private String username;

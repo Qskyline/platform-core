@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "UserLoginLog")
+@Table(name = "sys_userLoginLog")
 public class UserLoginLog {
     private String id;
     private Date latestLoginTime;

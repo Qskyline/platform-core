@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "Role")
+@Table(name = "sys_role")
 public class Role {
     private String id;
     private String roleName;

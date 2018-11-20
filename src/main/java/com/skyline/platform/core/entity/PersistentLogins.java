@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "persistent_logins")
+@Table(name = "sys_persistent_logins")
 public class PersistentLogins {
     private String series;
     private String username;
