@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false">
     <!--定义日志文件的存储地址 LogBack的地址， value可以使用相对路径 也可以使用绝对路径-->
-    <property name="LOG_HOME" value="./tmcLogs" />
+    <property name="LOG_HOME" value="./skylineLogs" />
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
