@@ -7,17 +7,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Home {
+public class Home extends BaseController {
 	@RequestMapping(value = "/security/getHomePageData.do", produces = "application/json;charset=UTF-8", method = {RequestMethod.POST})
 	@ResponseBody
 	public Object getHomePageData() {
 		return doIt(true);
-	}
-
-	private ResponseModel doIt(boolean isSuccess) {
-		ResponseModel responseModel;
-		if (isSuccess) responseModel = new ResponseModel("success");
-		else responseModel = new ResponseModel(ResponseModel.Status.OPERATION_FAILED);
-		return responseModel;
 	}
 }
