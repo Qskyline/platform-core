@@ -1,6 +1,5 @@
 package com.skyline.platform.core.controller;
 
-import com.skyline.platform.core.model.ResponseModel;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
