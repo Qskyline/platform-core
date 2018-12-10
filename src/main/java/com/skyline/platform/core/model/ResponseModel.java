@@ -61,6 +61,12 @@ public class ResponseModel {
 		this.errMsg = status.getMsg();
 		this.data = null;
 	}
+
+	public ResponseModel(Status status, String errMsg) {
+		this.statusCode = status.getCode();
+		this.errMsg = errMsg;
+		this.data = null;
+	}
 	
 	public String getErrMsg() {
 		return errMsg;
