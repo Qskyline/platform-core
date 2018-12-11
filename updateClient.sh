@@ -1,12 +1,19 @@
 #/bin/bash
 
+branch=master
+if [ -n "$1" ]; then
+    branch=$1
+fi
+
 build_dir=/Users/skyline/WebstormProjects
+if [ -n "$2" ]; then
+    build_dir=$2
+fi
 
 workdir=$(cd `dirname $0`; pwd)
 repo_url=ssh://git@github.com:Qskyline/client.git
 temp=${repo_url##*/}
 prj_name=${temp%.*}
-branch=master
 
 if [ -d "$build_dir/$prj_name" ]; then
     cd $build_dir/$prj_name
