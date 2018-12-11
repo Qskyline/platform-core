@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Home extends BaseController {
-	@RequestMapping(value = "/security/getHomePageData.do", produces = "application/json;charset=UTF-8", method = {RequestMethod.POST})
+	@RequestMapping(value = "/security/getWelcomePageData.do", produces = "application/json;charset=UTF-8", method = {RequestMethod.POST})
 	@ResponseBody
-	public Object getHomePageData() {
-		return doIt(true);
+	public Object getWelcomePageData() {
+		return doIt(true, "Welcome to SKYLINE.PLATFORM!");
 	}
 }
