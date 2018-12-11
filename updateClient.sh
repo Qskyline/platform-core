@@ -1,6 +1,6 @@
 #/bin/bash
 
-branch=master
+branch=templete
 if [ -n "$1" ]; then
     branch=$1
 fi
