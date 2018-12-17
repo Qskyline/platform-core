@@ -68,4 +68,10 @@ public class Authentication {
 		}
 		return responseModel;
 	}
+
+	@RequestMapping(value = "/security/hasRole.do", produces = "application/json;charset=UTF-8", method = {RequestMethod.POST})
+	public ResponseModel hasRole(@RequestParam("role") String roleName) {
+		if (userService.hasRole(roleName)) return new ResponseModel("true");
+		else return new ResponseModel("false");
+	}
 }
