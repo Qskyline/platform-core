@@ -1,6 +1,7 @@
 package com.skyline.platform.core.controller;
 
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.platform.core.model.ResponseStatus;
 
 public class BaseController {
     public ResponseModel doIt(boolean isSuccess, Object data) {
@@ -9,9 +10,9 @@ public class BaseController {
             responseModel = new ResponseModel(data);
         }
         else if (data instanceof String) {
-            responseModel = new ResponseModel(ResponseModel.Status.OPERATION_FAILED, (String) data);
+            responseModel = new ResponseModel(ResponseStatus.OPERATION_ERROR, (String) data);
         } else {
-            responseModel = new ResponseModel(ResponseModel.Status.OPERATION_FAILED);
+            responseModel = new ResponseModel(ResponseStatus.OPERATION_ERROR);
         }
         return responseModel;
     }
@@ -19,7 +20,7 @@ public class BaseController {
     public ResponseModel doIt(boolean isSuccess) {
         ResponseModel responseModel;
         if (isSuccess) responseModel = new ResponseModel("success");
-        else responseModel = new ResponseModel(ResponseModel.Status.OPERATION_FAILED);
+        else responseModel = new ResponseModel(ResponseStatus.OPERATION_ERROR);
         return responseModel;
     }
 }

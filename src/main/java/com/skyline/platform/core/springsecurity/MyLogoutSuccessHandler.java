@@ -1,6 +1,7 @@
 package com.skyline.platform.core.springsecurity;
 
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.platform.core.model.ResponseStatus;
 import com.skyline.util.NetworkUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -15,6 +16,6 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
 	public void onLogoutSuccess(HttpServletRequest paramHttpServletRequest,
 			HttpServletResponse response, Authentication paramAuthentication)
 			throws IOException {
-		NetworkUtil.writeToResponse(response, new ResponseModel(ResponseModel.Status.LOGOUT_SUCCESS));
+		NetworkUtil.writeToResponse(response, new ResponseModel(ResponseStatus.LOGOUT_SUCCESS));
 	}
 }

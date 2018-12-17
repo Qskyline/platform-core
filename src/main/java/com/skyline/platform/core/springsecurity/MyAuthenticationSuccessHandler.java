@@ -1,6 +1,7 @@
 package com.skyline.platform.core.springsecurity;
 
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.platform.core.model.ResponseStatus;
 import com.skyline.util.NetworkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,13 +27,13 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 		request.getSession().removeAttribute("verifyCode");
 		request.getSession().removeAttribute("verifyTime");
 
-		ResponseModel result = new ResponseModel(ResponseModel.Status.LOGIN_SUCCESS);
+		ResponseModel result = new ResponseModel(ResponseStatus.LOGIN_SUCCESS);
 		
 		List<SessionInformation> sessions = mySessionRegistryImpl.getAllSessions(authentication.getPrincipal(), false);
 		String currentSessionId = request.getSession(false).getId();
 		
 		if(sessions.size() > 1) {
-			result = new ResponseModel(ResponseModel.Status.LOGIN_USER_ALREADY_LOGGED);
+			result = new ResponseModel(ResponseStatus.LOGIN_USER_ALREADY_LOGGED);
 			for (SessionInformation sessionInfo : sessions) {
 				if(!sessionInfo.getSessionId().equals(currentSessionId)) {
 					((MySessionInformation)sessionInfo).setKicked();

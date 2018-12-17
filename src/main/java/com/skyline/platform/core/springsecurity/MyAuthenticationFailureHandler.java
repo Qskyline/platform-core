@@ -1,6 +1,7 @@
 package com.skyline.platform.core.springsecurity;
 
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.platform.core.model.ResponseStatus;
 import com.skyline.platform.core.service.UserService;
 import com.skyline.util.NetworkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,25 +34,25 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
 
 		ResponseModel result;
 		if(paramAuthenticationException instanceof LockedException) {
-			result = new ResponseModel(ResponseModel.Status.LOGIN_USER_LOCKED);
+			result = new ResponseModel(ResponseStatus.LOGIN_USER_LOCKED);
 		} else if(paramAuthenticationException instanceof SessionAuthenticationException) {
-			result = new ResponseModel(ResponseModel.Status.LOGIN_USER_NICKOUT_ERROR);
+			result = new ResponseModel(ResponseStatus.LOGIN_USER_NICKOUT_ERROR);
 		} else if(paramAuthenticationException instanceof MyAuthenticationException) {
 			switch (((MyAuthenticationException) paramAuthenticationException).getType()) {
 				case 0:
-					result = new ResponseModel(ResponseModel.Status.LOGIN_SECURITY_SQLINJECTION);
+					result = new ResponseModel(ResponseStatus.LOGIN_SECURITY_SQLINJECTION);
 					break;
 				case 1:
-					result = new ResponseModel(ResponseModel.Status.LOGIN_VERIFYCODE_ERROR);
+					result = new ResponseModel(ResponseStatus.LOGIN_VERIFYCODE_ERROR);
 					break;
 				case 2:
-					result = new ResponseModel(ResponseModel.Status.LOGIN_VERIFYCODE_TIMEOUT);
+					result = new ResponseModel(ResponseStatus.LOGIN_VERIFYCODE_TIMEOUT);
 					break;
 				default :
-					result = new ResponseModel(ResponseModel.Status.LOGIN_UNKNOWN_ERROR);
+					result = new ResponseModel(ResponseStatus.LOGIN_UNKNOWN_ERROR);
 			}
 		} else {
-			result = new ResponseModel(ResponseModel.Status.LOGIN_AUTH_FAILED);
+			result = new ResponseModel(ResponseStatus.LOGIN_AUTH_FAILED);
 		}
 
 		userService.addVerifyCode(paramHttpServletRequest, result);

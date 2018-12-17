@@ -1,6 +1,7 @@
 package com.skyline.platform.core.springsecurity;
 
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.platform.core.model.ResponseStatus;
 import com.skyline.platform.core.service.UserService;
 import com.skyline.util.NetworkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class MyAuthEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
 			throws IOException {
-		ResponseModel result = new ResponseModel(ResponseModel.Status.STATUS_NOLOGGED);
+		ResponseModel result = new ResponseModel(ResponseStatus.STATUS_NOLOGGED);
 		userService.addVerifyCode(request, result);
 		response.setContentType("application/json;charset=utf-8");
 		NetworkUtil.writeToResponse(response, result);

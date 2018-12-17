@@ -1,6 +1,7 @@
 package com.skyline.platform.core.springsecurity;
 
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.platform.core.model.ResponseStatus;
 import com.skyline.util.NetworkUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -13,6 +14,6 @@ import java.io.IOException;
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException arg2) throws IOException {
-		NetworkUtil.writeToResponse(response, new ResponseModel(ResponseModel.Status.STATUS_ACCESS_DENY));
+		NetworkUtil.writeToResponse(response, new ResponseModel(ResponseStatus.OPERATION_ERROR_ACCESS_DENY));
 	}
 }

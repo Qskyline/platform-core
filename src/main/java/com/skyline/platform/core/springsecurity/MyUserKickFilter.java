@@ -1,6 +1,7 @@
 package com.skyline.platform.core.springsecurity;
 
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.platform.core.model.ResponseStatus;
 import com.skyline.util.NetworkUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,7 +43,7 @@ public class MyUserKickFilter extends GenericFilterBean {
 				for (LogoutHandler logoutHandler : handlers) {
 					logoutHandler.logout(request, response, auth);
 				}
-				NetworkUtil.writeToResponse(response, new ResponseModel(ResponseModel.Status.STATUS_SESSION_SINGLE_USER_RESTRICTION));
+				NetworkUtil.writeToResponse(response, new ResponseModel(ResponseStatus.STATUS_SESSION_SINGLE_USER_RESTRICTION));
 				return ;
 			}
 		}
