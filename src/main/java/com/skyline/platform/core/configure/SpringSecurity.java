@@ -4,6 +4,7 @@ import com.skyline.platform.core.springsecurity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.RememberMeAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -66,6 +67,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     MyRememberMeService myRememberMeService;
 
     @Bean
+    @Primary
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
