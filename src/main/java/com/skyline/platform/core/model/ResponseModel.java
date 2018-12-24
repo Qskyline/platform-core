@@ -3,22 +3,24 @@ package com.skyline.platform.core.model;
 public class ResponseModel {
     private String errMsg;
     private int statusCode;
-    private Object data = "";
+    private Object data;
 
     public ResponseModel(Object data) {
         this.statusCode = ResponseStatus.STATUS_LOGGED.getCode();
         this.errMsg = ResponseStatus.STATUS_LOGGED.getMsg();
-        if(data != null) this.data = data;
+        this.data = data;
     }
 
     public ResponseModel(ResponseStatus status) {
         this.statusCode = status.getCode();
         this.errMsg = status.getMsg();
+        this.data = null;
     }
 
     public ResponseModel(ResponseStatus status, String errMsg) {
         this.statusCode = status.getCode();
         this.errMsg = errMsg;
+        this.data = null;
     }
 
     public String getErrMsg() {
