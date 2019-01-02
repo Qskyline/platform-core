@@ -114,7 +114,9 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
         return new MyUserKickFilter(new LogoutHandler[]{myClearLogoutHandler, securityContextLogoutHandler, myRememberMeService}, mySessionRegistry);
     }
     public ConcurrentSessionFilter concurrentSessionFilter() {
-        return new ConcurrentSessionFilter(mySessionRegistry, new SimpleRedirectSessionInformationExpiredStrategy("/session-expired.html", myRedirectStrategy));
+        ConcurrentSessionFilter concurrentSessionFilter = new ConcurrentSessionFilter(mySessionRegistry, new SimpleRedirectSessionInformationExpiredStrategy("/session-expired.html", myRedirectStrategy));
+        concurrentSessionFilter.setLogoutHandlers(new LogoutHandler[]{myClearLogoutHandler, securityContextLogoutHandler});
+        return concurrentSessionFilter;
     }
     public LogoutFilter logoutFilter() {
         LogoutFilter temp = new LogoutFilter(myLogoutSuccessHandler, myClearLogoutHandler, securityContextLogoutHandler, myRememberMeService);
