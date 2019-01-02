@@ -17,6 +17,9 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public MyAuthenticationProvider() {
+    }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         MyWebAuthenticationDetails details = (MyWebAuthenticationDetails) authentication.getDetails();
