@@ -78,7 +78,7 @@ public class User {
     @Type(type = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)  //define the precision of returning value
     @Column(name = "registerTime", updatable = false, nullable = false)
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    @ColumnDefault(value = "CURRENT_TIMESTAMP(6)")
     public Date getRegisterTime() {
         return registerTime;
     }
@@ -100,7 +100,7 @@ public class User {
     @Type(type = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updateTime")
-    @ColumnDefault(value = "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @ColumnDefault(value = "CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)")
     public Date getUpdateTime() {
         return updateTime;
     }
