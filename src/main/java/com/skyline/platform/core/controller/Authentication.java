@@ -4,6 +4,7 @@ import com.skyline.platform.core.model.ResponseModel;
 import com.skyline.platform.core.model.ResponseStatus;
 import com.skyline.platform.core.service.UserService;
 import com.skyline.util.SecurityUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -75,5 +77,13 @@ public class Authentication {
 		if (roleName == null) return new ResponseModel(ResponseStatus.OPERATION_ERROR_PARAMS);
 		if (userService.hasRole(roleName)) return new ResponseModel("true");
 		else return new ResponseModel("false");
+	}
+
+	@RequestMapping(value = "/security/getUserRole.do", produces = "application/json;charset=UTF-8", method = {RequestMethod.POST})
+	public ResponseModel getUserRole() {
+		ArrayList<String> roles = userService.getCurrentUserRole();
+		String str_role = StringUtils.join(roles, ',');
+		if (StringUtils.isEmpty(str_role)) str_role = "user";
+		return new ResponseModel(str_role);
 	}
 }

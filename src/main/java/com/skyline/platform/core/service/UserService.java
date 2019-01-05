@@ -9,8 +9,10 @@ import com.skyline.platform.core.entity.UserLoginLog;
 import com.skyline.platform.core.entity.User;
 import com.skyline.platform.core.entity.UserRole;
 import com.skyline.platform.core.model.ResponseModel;
+import com.skyline.util.StringUtil;
 import com.skyline.util.TimeUtil;
 import com.skyline.util.VerifyCode;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,7 @@ import sun.misc.BASE64Encoder;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -227,5 +226,20 @@ public class UserService {
 			return false;
 		}
 		return false;
+	}
+
+	public ArrayList<String> getCurrentUserRole() {
+		ArrayList<String> result = new ArrayList<>();
+		try {
+			Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+			Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
+			while (iterator.hasNext()) {
+				String role = iterator.next().getAuthority().toLowerCase().replaceFirst("role_", "");
+				if (StringUtils.isNotEmpty(role)) result.add(role);
+			}
+		} catch (Exception e) {
+			logger.error(StringUtil.getExceptionStackTraceMessage(e));
+		}
+		return result;
 	}
 }
