@@ -81,9 +81,6 @@ public class Authentication {
 
 	@RequestMapping(value = "/security/getUserRole.do", produces = "application/json;charset=UTF-8", method = {RequestMethod.POST})
 	public ResponseModel getUserRole() {
-		ArrayList<String> roles = userService.getCurrentUserRole();
-		String str_role = StringUtils.join(roles, ',');
-		if (StringUtils.isEmpty(str_role)) str_role = "user";
-		return new ResponseModel(str_role);
+		return new ResponseModel(userService.getStrCurrentUserRole());
 	}
 }

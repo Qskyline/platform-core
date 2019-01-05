@@ -242,4 +242,11 @@ public class UserService {
 		}
 		return result;
 	}
+
+	public String getStrCurrentUserRole() {
+		ArrayList<String> roles = getCurrentUserRole();
+		String str_role = StringUtils.join(roles, ',');
+		if (StringUtils.isEmpty(str_role)) str_role = "user";
+		return str_role;
+	}
 }
