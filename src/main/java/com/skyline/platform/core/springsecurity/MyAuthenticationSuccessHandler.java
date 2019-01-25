@@ -6,6 +6,7 @@ import com.skyline.util.NetworkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +15,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {	
+public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
-	private MySessionRegistryImpl mySessionRegistryImpl;
+	SessionRegistry sessionRegistry;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request,
@@ -29,7 +30,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
 		ResponseModel result = new ResponseModel(ResponseStatus.LOGIN_SUCCESS);
 		
-		List<SessionInformation> sessions = mySessionRegistryImpl.getAllSessions(authentication.getPrincipal(), false);
+		List<SessionInformation> sessions = sessionRegistry.getAllSessions(authentication.getPrincipal(), false);
 		String currentSessionId = request.getSession(false).getId();
 		
 		if(sessions.size() > 1) {
@@ -38,7 +39,9 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 				if(!sessionInfo.getSessionId().equals(currentSessionId)) {
 					((MySessionInformation)sessionInfo).setKicked();
 					sessionInfo.expireNow();
-					mySessionRegistryImpl.updateSessionInformation(sessionInfo);
+					if (sessionRegistry instanceof MySessionRegistryImpl) {
+						((MySessionRegistryImpl) sessionRegistry).updateSessionInformation(sessionInfo);
+					}
 				}
 			}
 		}

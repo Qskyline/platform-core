@@ -2,23 +2,25 @@ package com.skyline.platform.core.springsecurity;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.session.SessionDestroyedEvent;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@Component
 public class MySessionRegistryImpl implements SessionRegistry, ApplicationListener<SessionDestroyedEvent> {
-
-	@Autowired
 	RedisTemplate<String, Object> redisTemplate;
+
+	public MySessionRegistryImpl() {
+	}
+
+	public MySessionRegistryImpl(RedisTemplate<String, Object> redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}
 
 	protected final Log logger = LogFactory.getLog(MySessionRegistryImpl.class);
 	private String principals = "principals";

@@ -1,10 +1,13 @@
 package com.skyline.platform.core.configure;
 
 import com.skyline.platform.core.springsecurity.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.RememberMeAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -22,6 +26,7 @@ import org.springframework.security.web.authentication.session.*;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
+
 import java.util.ArrayList;
 
 @Configuration
@@ -49,7 +54,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     MyRedirectStrategy myRedirectStrategy;
     @Autowired
-    MySessionRegistryImpl  mySessionRegistry;
+    SessionRegistry mySessionRegistry;
     @Autowired
     MyUserDetails myUserDetails;
     @Autowired
@@ -65,6 +70,13 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     CompositeSessionAuthenticationStrategy compositeSessionAuthenticationStrategy;
     @Autowired
     MyRememberMeService myRememberMeService;
+
+    @Bean
+    public SessionRegistry sessionRegistry(RedisTemplate<String, Object> redisTemplate, Environment environment) {
+        String session_store_type = environment.getProperty("spring.session.store-type");
+        if (StringUtils.isNotEmpty(session_store_type) && session_store_type.equals("redis")) return new MySessionRegistryImpl(redisTemplate);
+        else return new MyLocalSessionRegistryImpl();
+    }
 
     @Bean
     @Primary

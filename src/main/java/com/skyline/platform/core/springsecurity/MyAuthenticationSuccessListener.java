@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class MyAuthenticationSuccessListener implements ApplicationListener<Inte
 	@Autowired
     UserService userService;
 	@Autowired
-	private MySessionRegistryImpl mySessionRegistryImpl;
+	private SessionRegistry sessionRegistry;
 	
 	@Override
 	public void onApplicationEvent(InteractiveAuthenticationSuccessEvent paramE) {
@@ -23,10 +24,12 @@ public class MyAuthenticationSuccessListener implements ApplicationListener<Inte
 		String userName = auth.getName();
 		if(!userService.updateSuccessUserLoginlog(userName)) {
 			//登录日志记录出错,强制下线
-			List<SessionInformation> sessions = mySessionRegistryImpl.getAllSessions(auth.getPrincipal(), false);
+			List<SessionInformation> sessions = sessionRegistry.getAllSessions(auth.getPrincipal(), false);
 			for (SessionInformation sessionInfo : sessions) {
 				sessionInfo.expireNow();
-				mySessionRegistryImpl.updateSessionInformation(sessionInfo);
+				if (sessionRegistry instanceof MySessionRegistryImpl) {
+					((MySessionRegistryImpl) sessionRegistry).updateSessionInformation(sessionInfo);
+				}
 			}
 		}
 	}
