@@ -5,7 +5,7 @@
 #定义仓库地址(必选)
 repo_url=ssh://git@github.com:Qskyline/client.git
 #指定构建版本(必选)
-branch=templete
+branch=template
 #指定构建生成目录(必选,基于构建目录的相对路径)
 generate_dir=dist
 #指定构建目录(可选)

@@ -5,7 +5,7 @@ set build_dir=C:\Users\Administrator\Desktop\clientBuild_temp_dir
 set workdir=%~dp0
 set repo_url=https://github.com/Qskyline/client.git
 set prj_name=client
-set branch=master
+set branch=template
 
 if exist %build_dir% (
 	cd /d %build_dir%
