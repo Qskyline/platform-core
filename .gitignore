@@ -1,5 +1,5 @@
 /target/
 /src/main/resources/static/
 .idea
-platform-server.iml
+*.iml
 /skylineLogs/
