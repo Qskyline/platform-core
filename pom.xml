@@ -6,24 +6,11 @@
 
     <groupId>com.skyline.platform</groupId>
     <artifactId>core</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>com.skyline.platform.core</name>
     <description>my web platform core project</description>
-
-    <!--<repositories>
-        <repository>
-            <id>my-maven-repo</id>
-            <url>http://172.20.178.39:8081/repository/maven-releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>-->
 
     <parent>
         <groupId>com.skyline.platform</groupId>
