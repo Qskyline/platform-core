@@ -1,7 +1,7 @@
 package com.skyline.platform.core.controller;
 
 import com.skyline.platform.core.model.ResponseModel;
-import com.skyline.platform.core.model.ResponseStatus;
+import com.skyline.platform.core.common.enums.ResponseStatus;
 
 public class BaseController {
     public ResponseModel doIt(boolean isSuccess, Object data) {

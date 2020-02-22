@@ -1,5 +1,6 @@
 package com.skyline.platform.core.springsecurity;
 
+import com.skyline.platform.core.common.enums.LoginType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,6 +14,9 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Autowired
     MyUserDetails myUserDetails;
+
+    @Autowired
+    WeChatUserDetails weChatUserDetails;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -41,6 +45,14 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
                 }
             }
         }
+
+        if (LoginType.weChat.equals(details.getLoginType())) {
+            this.setUserDetailsService(weChatUserDetails);
+        } else {
+            this.setUserDetailsService(myUserDetails);
+        }
+        this.setPasswordEncoder(bCryptPasswordEncoder);
+
         return super.authenticate(authentication);
     }
 

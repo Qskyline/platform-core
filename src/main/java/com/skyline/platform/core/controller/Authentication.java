@@ -1,10 +1,9 @@
 package com.skyline.platform.core.controller;
 
 import com.skyline.platform.core.model.ResponseModel;
-import com.skyline.platform.core.model.ResponseStatus;
+import com.skyline.platform.core.common.enums.ResponseStatus;
 import com.skyline.platform.core.service.UserService;
 import com.skyline.util.SecurityUtil;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -45,10 +43,10 @@ public class Authentication {
 		case usernameAlreadyExist:
 			responseModel = new ResponseModel(ResponseStatus.REGISTER_FAILED_U_E);
 			break;
-		case mobilephoneNumberAlreadyExist:
+		case mobilePhoneNumberAlreadyExist:
 			responseModel = new ResponseModel(ResponseStatus.REGISTER_FAILED_M_E);
 			break;
-		case unknowError:
+		case unknownError:
 		default:
 			responseModel = new ResponseModel(ResponseStatus.REGISTER_FAILED_UNKNOWN_ERROR);
 		}

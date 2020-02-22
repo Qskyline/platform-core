@@ -1,5 +1,7 @@
 package com.skyline.platform.core.model;
 
+import com.skyline.platform.core.common.enums.ResponseStatus;
+
 public class ResponseModel {
     private String errMsg;
     private int statusCode;

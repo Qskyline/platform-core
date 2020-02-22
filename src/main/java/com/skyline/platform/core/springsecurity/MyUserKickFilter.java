@@ -1,7 +1,7 @@
 package com.skyline.platform.core.springsecurity;
 
 import com.skyline.platform.core.model.ResponseModel;
-import com.skyline.platform.core.model.ResponseStatus;
+import com.skyline.platform.core.common.enums.ResponseStatus;
 import com.skyline.util.NetworkUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

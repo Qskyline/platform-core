@@ -1,4 +1,4 @@
-package com.skyline.platform.core.model;
+package com.skyline.platform.core.common.enums;
 
 /**
  * @ClassName ResponseStatus

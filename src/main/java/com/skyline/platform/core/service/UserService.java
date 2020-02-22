@@ -45,55 +45,65 @@ public class UserService {
 	private int tryCount = 3;
 	
 	public enum RegisterStatus {
-		success, usernameAlreadyExist, mobilephoneNumberAlreadyExist, unknowError
+		success, usernameAlreadyExist, mobilePhoneNumberAlreadyExist, unknownError
 	}
-	
+
+	@Transactional
+	public RegisterStatus register(
+			String userName,
+			String mobilePhoneNumber,
+			String password,
+			String telephoneNumber
+	) {
+		return register(userName, mobilePhoneNumber, password, telephoneNumber, false);
+	}
+
 	@Transactional
 	public RegisterStatus register(
 			String userName, 
-			String mobilephoneNumber,
+			String mobilePhoneNumber,
 			String password,
-			String telephoneNumber
+			String telephoneNumber,
+			boolean isAutoRegister
 			) {
-		if(userDao.findByUsername(userName) == null) {
-			if(userDao.findByMobilephoneNumber(mobilephoneNumber).size() == 0) {
-				User user = new User();
-				user.setUsername(userName);
-				user.setMobilephoneNumber(mobilephoneNumber);
-				user.setPassword(password);
-				if(telephoneNumber != null) {
-					user.setTelephoneNumber(telephoneNumber);
-				}
-				Date date = TimeUtil.getDateNow();
-				user.setRegisterTime(date);
-				user.setUpdateTime(date);
-				
-				Role role = roleDao.findByRoleName(initialRoleName);
-				
-				UserRole userRole = new UserRole();
-				userRole.setUser(user);
-				userRole.setRole(role);
-				
-				UserLoginLog userLoginLog = new UserLoginLog();
-				userLoginLog.setUser(user);
-
-				try {
-					userDao.save(user);
-					userRoleDao.save(userRole);
-					userLoginLogDao.save(userLoginLog);
-				} catch (Exception e) {
-//					logService.dbErrorLog(logger, e);
-					return RegisterStatus.unknowError;
-				}
-//				success
-				return RegisterStatus.success;
-			} else {
-//				mobilephoneNumber is registered
-				return RegisterStatus.mobilephoneNumberAlreadyExist;
-			}
+		if(userDao.findByUsername(userName) != null) {
+			return RegisterStatus.usernameAlreadyExist;
 		}
-//		username is used
-		return RegisterStatus.usernameAlreadyExist;
+
+		if (!isAutoRegister && userDao.findByMobilephoneNumber(mobilePhoneNumber).size() > 0) {
+			return RegisterStatus.mobilePhoneNumberAlreadyExist;
+		}
+
+		User user = new User();
+		user.setUsername(userName);
+		user.setMobilephoneNumber(mobilePhoneNumber);
+		user.setPassword(password);
+		if(telephoneNumber != null) {
+			user.setTelephoneNumber(telephoneNumber);
+		}
+		Date date = TimeUtil.getDateNow();
+		user.setRegisterTime(date);
+		user.setUpdateTime(date);
+
+		Role role = roleDao.findByRoleName(initialRoleName);
+
+		UserRole userRole = new UserRole();
+		userRole.setUser(user);
+		userRole.setRole(role);
+
+		UserLoginLog userLoginLog = new UserLoginLog();
+		userLoginLog.setUser(user);
+
+		try {
+			userDao.save(user);
+			userRoleDao.save(userRole);
+			userLoginLogDao.save(userLoginLog);
+		} catch (Exception e) {
+			// logService.dbErrorLog(logger, e);
+			return RegisterStatus.unknownError;
+		}
+		// success
+		return RegisterStatus.success;
 	}
 	
 	@Transactional
